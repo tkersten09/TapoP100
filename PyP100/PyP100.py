@@ -53,7 +53,7 @@ class P100():
 
 		self.email = email
 		self.password = password
-		self.session = Session()
+		self.session = None
 
 		self.errorCodes = ERROR_CODES
 
@@ -118,6 +118,10 @@ class P100():
 				"requestTimeMils": int(round(time.time() * 1000))
 			}
 		}
+		# start new TCP session
+		if self.session:
+			self.session.close()
+		self.session = Session()
 
 		r = self.session.post(URL, json=Payload, timeout=2)
 
