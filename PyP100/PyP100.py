@@ -111,7 +111,12 @@ class P100():
 		return sb
 
 	def check_session(self):
-		if self.is_handshake is False:
+		try:
+			self.handshake()
+		except:
+			self.session.close()
+			self.session = None
+			self.is_login = False
 			self.handshake()
 		if self.is_login is False:
 			self.login()
@@ -128,8 +133,8 @@ class P100():
 		# start new TCP session
 		if self.session:
 			self.session.close()
-			self.is_login = False
 		self.session = Session()
+		self.is_login = False
 
 		r = self.session.post(URL, json=Payload, timeout=2)
 
