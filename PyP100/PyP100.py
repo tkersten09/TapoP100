@@ -262,8 +262,6 @@ class P100():
 		return json.loads(decryptedResponse)
 
 	def getDeviceName(self):
-		self.handshake()
-		self.login()
 		data = self.getDeviceInfo()
 
 		if data["error_code"] != 0:
